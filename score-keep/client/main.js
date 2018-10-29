@@ -1,6 +1,15 @@
 import React  from "react";
 import ReactDOM from 'react-dom';
 import {Meteor} from 'meteor/meteor';
+import {Tracker} from 'meteor/tracker';
+
+import {Players} from './../imports/api/players';
+
+// Run a function now and rerun it later whenever its dependencies change.
+// Returns a Computation object that can be used to stop or observe the rerunning.
+Tracker.autorun(function(){
+  console.log(Players.find().fetch());
+})
 
 const players = [
   {
