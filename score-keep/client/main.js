@@ -7,27 +7,6 @@ import {Players} from './../imports/api/players';
 
 // Run a function now and rerun it later whenever its dependencies change.
 // Returns a Computation object that can be used to stop or observe the rerunning.
-Tracker.autorun(function(){
-  console.log(Players.find().fetch());
-})
-
-const players = [
-  {
-    _id: '1',
-    name: 'Lauren',
-    score: 99
-  },
-  {
-    _id:'2',
-    name: 'Corey',
-    score: -1
-  },
-  {
-    _id:'3',
-    name: 'Andrew',
-    score: -12
-  }
-];
 
 const renderPlayer = function(playersList){
   return playersList.map(item => {
@@ -37,12 +16,16 @@ const renderPlayer = function(playersList){
 
 // A function to run on startup.
 Meteor.startup(function () {
-  let jsx = (
-    <div>
-      <p>This is from main.js</p>
-      {renderPlayer(players)}
-    </div>
-  )
-  ReactDOM.render(jsx, document.getElementById('app'));
+//
+  Tracker.autorun(function(){
+    let players = Players.find().fetch();
+    let jsx = (
+      <div>
+        <p>This is from main.js</p>
+        {renderPlayer(players)}
+      </div>
+    )
+    ReactDOM.render(jsx, document.getElementById('app'));
+  })
 })
 
